@@ -1,8 +1,17 @@
 from faker import Faker
 
-from src.domain.events.messages import NewMessageReceivedEvent, NewChatCreated
-from src.domain.value_objects.messages import Text, Title
-from src.domain.entities.messages import Message, Chat
+from src.domain.entities.messages import (
+    Chat,
+    Message,
+)
+from src.domain.events.messages import (
+    NewChatCreated,
+    NewMessageReceivedEvent,
+)
+from src.domain.value_objects.messages import (
+    Text,
+    Title,
+)
 
 
 def test_create_message_success(faker: Faker):

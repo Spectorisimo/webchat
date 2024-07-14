@@ -1,9 +1,9 @@
+from punq import Container
 from pytest import fixture
 
-from punq import Container
-
-from src.infra.repositories.messages.base import BaseChatRepository
 from src.application.mediator import Mediator
+from src.infra.repositories.messages.base import BaseChatRepository
+
 from .fixtures import init_dummy_container
 
 

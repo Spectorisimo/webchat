@@ -1,6 +1,9 @@
 from dataclasses import dataclass
 
-from src.application.commands.base import BaseCommand, CommandHandler
+from src.application.commands.base import (
+    BaseCommand,
+    CommandHandler,
+)
 from src.application.exceptions.messages import ChatWithThisTitleAlreadyExistsException
 from src.domain.entities.messages import Chat
 from src.domain.value_objects.messages import Title

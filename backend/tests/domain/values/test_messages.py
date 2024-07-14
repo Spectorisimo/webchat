@@ -1,8 +1,14 @@
 import pytest
 from faker import Faker
 
-from src.domain.exceptions.messages import TextTooLongException, EmptyTextException
-from src.domain.value_objects.messages import Text, Title
+from src.domain.exceptions.messages import (
+    EmptyTextException,
+    TextTooLongException,
+)
+from src.domain.value_objects.messages import (
+    Text,
+    Title,
+)
 
 
 def test_create_text_success(faker: Faker):

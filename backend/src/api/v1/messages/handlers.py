@@ -1,13 +1,20 @@
-from fastapi import HTTPException, Depends
+from fastapi import (
+    Depends,
+    HTTPException,
+    status,
+)
 from fastapi.routing import APIRouter
-from fastapi import status
 
 from src.api.schemas import ErrorSchema
-from src.api.v1.messages.schemas import CreateChatRequestSchema, CreateChatResponseSchema
+from src.api.v1.messages.schemas import (
+    CreateChatRequestSchema,
+    CreateChatResponseSchema,
+)
 from src.application.commands.messages import CreateChatCommand
-from src.infra.di.containers import init_container
 from src.application.mediator import Mediator
 from src.domain.exceptions.base import ApplicationException
+from src.infra.di.containers import init_container
+
 
 router = APIRouter(
     prefix='/chat',
@@ -22,13 +29,13 @@ router = APIRouter(
     responses={
         status.HTTP_201_CREATED: {'model': CreateChatResponseSchema},
         status.HTTP_400_BAD_REQUEST: {'model': ErrorSchema},
-    }
+    },
 )
 async def create_chat_handler(
         schema: CreateChatRequestSchema,
-        container=Depends(init_container)
+        container=Depends(init_container),
 ) -> CreateChatResponseSchema:
-    """ Create new chat """
+    """Create new chat."""
     mediator: Mediator = container.resolve(Mediator)
 
     try:

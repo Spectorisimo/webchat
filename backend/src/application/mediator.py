@@ -1,11 +1,22 @@
 from collections import defaultdict
-from dataclasses import dataclass, field
+from dataclasses import (
+    dataclass,
+    field,
+)
 from typing import Iterable
 
-from src.application.commands.base import CommandHandler, CT, CR, BaseCommand
-from src.application.events.base import EventHandler, ET, ER
-from src.application.exceptions.mediator import EventHandlersNotRegisteredException, \
-    CommandHandlersNotRegisteredException
+from src.application.commands.base import (
+    BaseCommand,
+    CommandHandler,
+    CR,
+    CT,
+)
+from src.application.events.base import (
+    ER,
+    ET,
+    EventHandler,
+)
+from src.application.exceptions.mediator import CommandHandlersNotRegisteredException
 from src.domain.events.base import BaseEvent
 
 

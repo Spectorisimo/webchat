@@ -1,6 +1,11 @@
 from dataclasses import dataclass
+
+from src.domain.exceptions.messages import (
+    EmptyTextException,
+    TextTooLongException,
+)
+
 from .base import BaseValueObject
-from src.domain.exceptions.messages import TextTooLongException, EmptyTextException
 
 
 @dataclass(frozen=True)

@@ -2,11 +2,10 @@ from fastapi import FastAPI
 from fastapi.testclient import TestClient
 
 import pytest
+from tests.fixtures import init_dummy_container
 
 from src.api.main import create_app
 from src.infra.di.containers import init_container
-
-from tests.fixtures import init_dummy_container
 
 
 @pytest.fixture

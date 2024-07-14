@@ -17,4 +17,4 @@ class EmptyTextException(ApplicationException):
 
     @property
     def message(self):
-        return f'Text can not be empty'
+        return 'Text can not be empty'

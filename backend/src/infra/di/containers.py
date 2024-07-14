@@ -1,9 +1,17 @@
 from functools import lru_cache
-from punq import Container, Scope
+
 from motor.motor_asyncio import AsyncIOMotorClient
-from src.infra.repositories.messages.base import BaseChatRepository
-from src.application.commands.messages import CreateChatCommand, CreateChatCommandHandler
+from punq import (
+    Container,
+    Scope,
+)
+
+from src.application.commands.messages import (
+    CreateChatCommand,
+    CreateChatCommandHandler,
+)
 from src.application.mediator import Mediator
+from src.infra.repositories.messages.base import BaseChatRepository
 from src.infra.repositories.messages.mongo import MongoDBChatRepository
 from src.settings.config import Config
 

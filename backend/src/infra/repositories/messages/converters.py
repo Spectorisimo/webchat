@@ -1,4 +1,7 @@
-from src.domain.entities.messages import Chat, Message
+from src.domain.entities.messages import (
+    Chat,
+    Message,
+)
 
 
 def convert_message_entity_to_document(message: Message) -> dict:

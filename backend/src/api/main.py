@@ -1,4 +1,5 @@
 from fastapi import FastAPI
+
 from src.api.v1.messages.handlers import router as message_router
 
 

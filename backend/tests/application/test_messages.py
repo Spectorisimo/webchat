@@ -1,6 +1,6 @@
 import pytest
-from tests.conftest import *  # noqa
 from faker import Faker
+from tests.conftest import *  # noqa
 
 from src.application.commands.messages import CreateChatCommand
 from src.application.exceptions.messages import ChatWithThisTitleAlreadyExistsException
