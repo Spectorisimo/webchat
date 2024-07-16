@@ -2,6 +2,7 @@ from dataclasses import (
     dataclass,
     field,
 )
+from typing import Iterable
 
 from src.domain.entities.messages import Chat
 from src.infra.repositories.messages.base import BaseChatRepository
@@ -31,3 +32,6 @@ class MemoryChatRepository(BaseChatRepository):
             )
         except StopIteration:
             return None
+
+    async def get_all_chats(self) -> Iterable[Chat]:
+        return self._saved_chats

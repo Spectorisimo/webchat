@@ -9,6 +9,7 @@ from src.domain.entities.messages import (
     Chat,
     Message,
 )
+from src.infra.repositories.filters.messages import MessagesFilter
 
 
 @dataclass
@@ -38,5 +39,5 @@ class BaseMessageRepository(ABC):
         ...
 
     @abstractmethod
-    async def get_messages_by_chat_oid(self, chat_oid: str) -> Iterable[Message]:
+    async def get_messages_by_chat_oid(self, chat_oid: str, filters: MessagesFilter) -> tuple[Iterable[Message], int]:
         ...

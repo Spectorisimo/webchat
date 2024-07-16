@@ -4,7 +4,7 @@ from tests.conftest import *  # noqa
 
 from src.application.commands.messages import CreateChatCommand
 from src.application.exceptions.messages import ChatWithThisTitleAlreadyExistsException
-from src.application.mediator import Mediator
+from src.application.mediator.base import Mediator
 from src.domain.entities.messages import Chat
 from src.domain.value_objects.messages import Title
 from src.infra.repositories.messages.base import BaseChatRepository

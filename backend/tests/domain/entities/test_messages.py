@@ -16,8 +16,11 @@ from src.domain.value_objects.messages import (
 
 def test_create_message_success(faker: Faker):
     value = faker.text()[:100]
+
     text = Text(value=value)
-    message = Message(text=text)
+    chat_oid = faker.uuid4()
+
+    message = Message(text=text, chat_oid=chat_oid)
     assert message.text.value == value
 
 
@@ -36,9 +39,11 @@ def test_add_message_to_chat(faker: Faker):
     title = Title(value=value)
 
     text = Text(value=value)
-    message = Message(text=text)
+    chat_oid = faker.uuid4()
 
     chat = Chat(title=title)
+    message = Message(text=text, chat_oid=chat.oid)
+
     chat.add_message(message=message)
 
     assert message in chat.messages
@@ -55,9 +60,10 @@ def test_new_message_events(faker: Faker):
     title = Title(value=value)
 
     text = Text(value=value)
-    message = Message(text=text)
 
     chat = Chat(title=title)
+    message = Message(text=text, chat_oid=chat.oid)
+
     chat.add_message(message=message)
     events = chat.pull_events()
 

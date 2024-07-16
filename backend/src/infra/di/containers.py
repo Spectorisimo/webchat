@@ -16,6 +16,8 @@ from src.application.mediator.base import Mediator
 from src.application.queries.messages import (
     GetChatDetailQuery,
     GetChatDetailQueryHandler,
+    GetMessagesQuery,
+    GetMessagesQueryHandler,
 )
 from src.infra.repositories.messages.base import (
     BaseChatRepository,
@@ -63,6 +65,7 @@ def _init_container() -> Container:
     container.register(CreateMessageCommandHandler)
 
     container.register(GetChatDetailQueryHandler)
+    container.register(GetMessagesQueryHandler)
 
     def init_mediator():
         mediator = Mediator()
@@ -82,6 +85,11 @@ def _init_container() -> Container:
         mediator.register_query(
             GetChatDetailQuery,
             container.resolve(GetChatDetailQueryHandler),
+        )
+
+        mediator.register_query(
+            GetMessagesQuery,
+            container.resolve(GetMessagesQueryHandler),
         )
 
         return mediator

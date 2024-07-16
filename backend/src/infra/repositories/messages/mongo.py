@@ -8,6 +8,7 @@ from src.domain.entities.messages import (
     Chat,
     Message,
 )
+from src.infra.repositories.filters.messages import MessagesFilter
 from src.infra.repositories.messages.base import (
     BaseChatRepository,
     BaseMessageRepository,
@@ -66,12 +67,16 @@ class MongoDBMessageRepository(BaseMessageRepository, BaseMongoDBRepository):
             document=convert_message_entity_to_document(message),
         )
 
-    async def get_messages_by_chat_oid(self, chat_oid: str) -> Iterable[Message]:
-        cursor = self._collection.find(filter={'chat_oid': chat_oid}).sort({'created_at': -1})
+    async def get_messages_by_chat_oid(self, chat_oid: str, filters: MessagesFilter) -> tuple[Iterable[Message], int]:
+        cursor = self._collection.find(filter={'chat_oid': chat_oid}).skip(filters.offset).limit(filters.limit).sort(
+            {'created_at': -1},
+        )
 
         messages = [
             convert_message_document_to_entity(message_document=message_document)
             async for message_document in cursor
         ]
 
-        return messages
+        count = await self._collection.count_documents(filter={'chat_oid': chat_oid})
+
+        return messages, count
