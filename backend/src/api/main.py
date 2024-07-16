@@ -11,5 +11,5 @@ def create_app() -> FastAPI:
         debug=True,
     )
 
-    app.include_router(message_router, prefix='/chat')
+    app.include_router(message_router)
     return app

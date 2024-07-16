@@ -17,6 +17,7 @@ from src.domain.value_objects.messages import (
 @dataclass(eq=False)
 class Message(BaseEntity):
     text: Text
+    chat_oid: str
 
 
 @dataclass(eq=False)
