@@ -50,4 +50,3 @@ class GetMessagesQueryHandler(BaseQueryHandler):
             chat_oid=query.chat_oid,
             filters=query.filters,
         )
-

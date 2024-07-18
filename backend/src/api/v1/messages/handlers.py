@@ -32,6 +32,7 @@ from src.application.queries.messages import (
 from src.domain.exceptions.base import ApplicationException
 from src.infra.di.containers import init_container
 
+
 router = APIRouter(
     prefix='/chat',
     tags=['Chat'],
