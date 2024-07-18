@@ -39,7 +39,6 @@ def test_add_message_to_chat(faker: Faker):
     title = Title(value=value)
 
     text = Text(value=value)
-    chat_oid = faker.uuid4()
 
     chat = Chat(title=title)
     message = Message(text=text, chat_oid=chat.oid)
