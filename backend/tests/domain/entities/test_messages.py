@@ -5,7 +5,7 @@ from src.domain.entities.messages import (
     Message,
 )
 from src.domain.events.messages import (
-    NewChatCreated,
+    NewChatCreatedEvent,
     NewMessageReceivedEvent,
 )
 from src.domain.value_objects.messages import (
@@ -90,6 +90,6 @@ def test_new_chat_events(faker: Faker):
 
     new_chat_created_event = events[0]
 
-    assert isinstance(new_chat_created_event, NewChatCreated), new_chat_created_event
+    assert isinstance(new_chat_created_event, NewChatCreatedEvent), new_chat_created_event
     assert new_chat_created_event.chat_oid == chat.oid
     assert new_chat_created_event.chat_title == chat.title.to_raw()

@@ -4,10 +4,11 @@ LOGS = docker logs
 
 APP_LOCAL = deploy/local/app.yaml
 STORAGES_LOCAL = deploy/local/storages.yaml
+KAFKA_LOCAL = deploy/local/kafka.yaml
 
 .PHONY: run-local
 run-local:
-	${DC} -f ${STORAGES_LOCAL} -f ${APP_LOCAL} up --build -d
+	${DC} -f ${STORAGES_LOCAL} -f ${KAFKA_LOCAL} -f ${APP_LOCAL} up --build -d
 
 .PHONY: check
 check:

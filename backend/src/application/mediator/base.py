@@ -41,7 +41,7 @@ class Mediator:
         kw_only=True,
     )
 
-    def register_event(self, event: ET, event_handlers: Iterable[EventHandler[ET, ER]]) -> None:
+    def register_event(self, event: type[ET], event_handlers: Iterable[EventHandler[ET, ER]]) -> None:
         self.events_map[event].extend(event_handlers)
 
     def register_command(self, command: type[CT], command_handlers: Iterable[CommandHandler[CT, CR]]) -> None:

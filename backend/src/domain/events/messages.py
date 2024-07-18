@@ -11,6 +11,6 @@ class NewMessageReceivedEvent(BaseEvent):
 
 
 @dataclass
-class NewChatCreated(BaseEvent):
+class NewChatCreatedEvent(BaseEvent):
     chat_oid: str
     chat_title: str

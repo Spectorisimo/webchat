@@ -124,7 +124,7 @@ async def get_chat_messages_handler(
         filters: MessagesFilter = Depends(),
         container: Container = Depends(init_container),
 ) -> MessagesResponseSchema:
-    """Get chat info and it messages."""
+    """Get messages of chat."""
     mediator: QueryMediator = container.resolve(Mediator)
 
     try:
