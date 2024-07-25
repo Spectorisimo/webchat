@@ -1,0 +1,24 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: chat-kafka
+  labels:
+    app: chat-kafka
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: chat-kafka
+  template:
+    metadata:
+      labels:
+        app: chat-kafka
+    spec:
+      containers:
+        - name: chat-kafka
+          image: confluentinc/cp-kafka:latest
+          ports:
+            - containerPort: 29092
+          envFrom:
+            - configMapRef:
+                name: chat-kafka-config

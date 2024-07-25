@@ -1,0 +1,32 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: fastapi-webchat
+  labels:
+    app: fastapi-webchat
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: fastapi-webchat
+  template:
+    metadata:
+      labels:
+        app: fastapi-webchat
+    spec:
+      containers:
+        - name: fastapi-webchat
+          image: spectorisimo/fastapi-webchat:master
+          command:
+            - uvicorn
+            - --factory
+            - src.api.main:create_app
+            - --host
+            - 0.0.0.0
+            - --port
+            - "8000"
+          ports:
+            - containerPort: 8000
+          envFrom:
+            - configMapRef:
+                name: fastapi-webchat-config
