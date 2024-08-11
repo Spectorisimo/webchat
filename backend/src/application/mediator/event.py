@@ -25,7 +25,7 @@ class EventMediator(ABC):
     )
 
     @abstractmethod
-    def register_event(self, event: ET, event_handlers: Iterable[EventHandler[ET, ER]]):
+    def register_event(self, event: ET, event_handlers: Iterable[EventHandler[ET, ER]]) -> None:
         ...
 
     @abstractmethod

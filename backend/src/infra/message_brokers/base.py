@@ -3,6 +3,7 @@ from abc import (
     abstractmethod,
 )
 from dataclasses import dataclass
+from typing import AsyncGenerator, Any
 
 
 @dataclass
@@ -20,7 +21,7 @@ class BaseMessageBroker(ABC):
         ...
 
     @abstractmethod
-    async def start_consuming(self, topic: str):
+    async def start_consuming(self, topic: str) -> AsyncGenerator[Any, None]:
         ...
 
     @abstractmethod

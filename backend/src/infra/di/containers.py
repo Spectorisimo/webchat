@@ -1,6 +1,7 @@
 from functools import lru_cache
 from uuid import uuid4
 
+from aiojobs import Scheduler
 from aiokafka import (
     AIOKafkaConsumer,
     AIOKafkaProducer,
@@ -20,6 +21,7 @@ from src.application.commands.messages import (
 from src.application.events.messages import (
     NewChatCreatedEventHandler,
     NewMessageReceivedEventHandler,
+    NewMessageReceivedFromBrokerEventHandler,
 )
 from src.application.mediator.base import Mediator
 from src.application.mediator.event import EventMediator
@@ -32,6 +34,7 @@ from src.application.queries.messages import (
 from src.domain.events.messages import (
     NewChatCreatedEvent,
     NewMessageReceivedEvent,
+    NewMessageReceivedFromBrokerEvent,
 )
 from src.infra.message_brokers.base import BaseMessageBroker
 from src.infra.message_brokers.kafka import KafkaMessageBroker
@@ -42,6 +45,10 @@ from src.infra.repositories.messages.base import (
 from src.infra.repositories.messages.mongo import (
     MongoDBChatRepository,
     MongoDBMessageRepository,
+)
+from src.infra.websocket.managers import (
+    BaseConnectionManager,
+    ConnectionManager,
 )
 from src.settings.config import Config
 
@@ -84,6 +91,8 @@ def _init_container() -> Container:
         )
 
     container.register(BaseMessageBroker, factory=create_message_broker, scope=Scope.singleton)
+
+    container.register(BaseConnectionManager, instance=ConnectionManager(), scope=Scope.singleton)
 
     container.register(BaseChatRepository, factory=init_chat_mongodb_repository, scope=Scope.singleton)
     container.register(BaseMessageRepository, factory=init_message_mongodb_repository, scope=Scope.singleton)
@@ -133,10 +142,18 @@ def _init_container() -> Container:
         new_chat_created_event_handler = NewChatCreatedEventHandler(
             broker_topic=config.new_chat_created_topic,
             message_broker=container.resolve(BaseMessageBroker),
+            connection_manager=container.resolve(BaseConnectionManager),
         )
         new_message_received_handler = NewMessageReceivedEventHandler(
             broker_topic=config.new_message_received_topic,
             message_broker=container.resolve(BaseMessageBroker),
+            connection_manager=container.resolve(BaseConnectionManager),
+        )
+
+        new_message_received_from_broker_event_handler = NewMessageReceivedFromBrokerEventHandler(
+            message_broker=container.resolve(BaseMessageBroker),
+            broker_topic=config.new_message_received_topic,
+            connection_manager=container.resolve(BaseConnectionManager),
         )
 
         mediator.register_event(
@@ -147,10 +164,16 @@ def _init_container() -> Container:
             NewMessageReceivedEvent,
             [new_message_received_handler],
         )
+        mediator.register_event(
+            NewMessageReceivedFromBrokerEvent,
+            [new_message_received_from_broker_event_handler],
+        )
 
         return mediator
 
     container.register(Mediator, factory=init_mediator)
     container.register(EventMediator, factory=init_mediator)
+
+    container.register(Scheduler, instance=Scheduler(), scope=Scope.singleton)
 
     return container

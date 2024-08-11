@@ -34,8 +34,8 @@ from src.infra.di.containers import init_container
 
 
 router = APIRouter(
-    prefix='/chat',
-    tags=['Chat'],
+    prefix='/chats',
+    tags=['Chats'],
 )
 
 
@@ -64,7 +64,7 @@ async def create_chat_handler(
 
 
 @router.post(
-    '/{chat_oid}/messages',
+    '/{chat_oid}/messages/',
     response_model=CreateMessageResponseSchema,
     status_code=status.HTTP_201_CREATED,
     responses={
